@@ -1,0 +1,33 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital@1&display=swap');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+//@import '~mdbootstrap/css/bootstrap.css';
+
+
+@import '~ionicons/dist/scss/ionicons.scss';
+
+@import '~mdbootstrap/scss/mdb-free';
+@import '~mdbootstrap/css/mdb.css';
+@import '~@fortawesome/fontawesome-free/scss/fontawesome';
+@import '~@fortawesome/fontawesome-free/scss/regular';
+@import '~@fortawesome/fontawesome-free/scss/solid';
+@import '~@fortawesome/fontawesome-free/scss/brands';
+
+//@import '~blueimp-gallery/css/blueimp-gallery.min.css';
+@import '~lightgallery/dist/css/lightgallery.min.css';
+@import '~lightgallery/dist/css/lg-transitions.min.css';
+@import '~lightgallery/dist/css/lg-fb-comment-box.min.css';
+
+
+@import '~fullcalendar/main.min.css';
+@import '~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+
+@import 'kahaki';
+
+@import 'materialize-stepper';
