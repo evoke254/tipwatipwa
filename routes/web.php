@@ -42,6 +42,7 @@ Route::get('/forms', 'FormsController@forms')->name('forms');
 Route::get('/download/form/{id}', 'FormsController@download');
 Route::get('/download/bulletin/{id}', 'BulletinController@download');
 Route::get('/trainers', 'PageController@trainers')->name('trainers');
+Route::view('events', 'FrontEnd.Events.view');
 
 Route::post('/subscribe', 'SubscriberController@store');
 

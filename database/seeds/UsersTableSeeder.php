@@ -18,6 +18,14 @@ class UsersTableSeeder extends Seeder
             'password' => bcrypt("dYJCm'y+43&r.L."),
             'email_verified_at' => now(),
     	    'remember_token' => Str::random(10),
-        ]);
+        ],
+    [
+
+        'name' => 'lennox',
+        'email' => 'lennox@lennox.lennox',
+        'password' => bcrypt("lennox"),
+        'email_verified_at' => now(),
+        'remember_token' => Str::random(10),
+    ]);
     }
 }
