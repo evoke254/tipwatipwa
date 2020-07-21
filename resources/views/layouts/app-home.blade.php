@@ -10,7 +10,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
-    <link rel = "icon" href="{{ asset('images/logo1.png') }}" type = "image/x-icon"> 
+    <link rel = "icon" href="{{ asset('images/logo1.png') }}" type = "image/x-icon">
     <title>{{env('APP_NAME')}} | Swift Apps Africa</title>
 
 
@@ -34,7 +34,7 @@
         <div></div>
         <div></div>
     </div>
-    <div id="app" class="d-none">
+    <div>
         <main class="">
             @yield('content')
         </main>
@@ -44,21 +44,21 @@
     <script src="{{asset('js/swift.js')}}"></script>
 
     <script type="text/javascript">
-        
+
         $(window).on('load', function() {
 
            setTimeout(function(){ $('#myLoader').hide(); }, 2000);
          //   $('#app').show();
-            setTimeout(function(){ 
+            setTimeout(function(){
                 var app = document.getElementById("app");
                 app.classList.remove("d-none");
-                app.className = "animated pulse"; 
+                app.className = "animated pulse";
             }, 2);
           });
 
       @yield('scripts')
     </script>
-    
+
 
 </body>
 </html>

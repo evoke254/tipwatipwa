@@ -1,0 +1,52 @@
+.eventView {
+    width: 80vw;
+    margin: auto;
+    .event-wrapper {
+        width: 100%;
+        .event-image-wrapper {
+            padding: 0;
+            height: 500px;
+            width: 100%;
+            margin-bottom: 50px;
+            img {
+                margin: auto;
+                overflow: hidden;
+                min-width: 500px;
+            }
+        }
+        .event-details {
+            padding: 20px;
+            color: white;
+            .price-wrapper {
+                position: inherit;
+                bottom: 0;
+                color: white;
+                background: #25c97a;
+                padding: 4px 15px;
+                border-radius: 4px;
+                display: inline-block;
+                margin-bottom: 24px;
+                left: 0;
+            }
+            .event-small-details {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                padding: 20px;
+                .detail-item {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    cursor: pointer;
+                }
+            }
+            .event-description-wrapper {
+                color: white;
+                font-size: 14px;
+                font-weight: normal;
+                line-height: 28px;
+            }
+        }
+    }
+}
+@media only screen and (max-width: 500px) {
+}

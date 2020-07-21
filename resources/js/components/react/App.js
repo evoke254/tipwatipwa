@@ -11,6 +11,8 @@ import QuestionsCreate from './components/questions/create.component';
 import MailConfig from './components/mail/mailconfig.component';
 import SchedulesRead from './components/schedule/read.component';
 import ScheduleCreate from './components/schedule/create.component';
+import EventRead from './components/events/read.component';
+import EventView from './components/events/view.component';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route exact path='/admin/mailconfig' component={MailConfig}/>
         <Route exact path='/admin/schedule' component={SchedulesRead}/>
         <Route exact path='/admin/schedule/create' component={ScheduleCreate}/>
+        <Route exact path='/eventlist' component={EventRead}/>
+        <Route exact path='/eventview' component={EventView}/>
     </Switch>
   );
 }
