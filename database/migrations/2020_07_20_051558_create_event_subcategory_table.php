@@ -13,8 +13,9 @@ class CreateEventSubcategoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('event_subcategory', function (Blueprint $table) {
+        Schema::create('events_subcategory', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ class CreateEventSubcategoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_subcategory');
+        Schema::dropIfExists('events_subcategory');
     }
 }

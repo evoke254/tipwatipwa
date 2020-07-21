@@ -21,7 +21,7 @@ Route::get('/fitness_for_all', 'AboutitemController@fit')->name('fitness_for_all
 Route::get('/explore_and_discover', 'AboutitemController@explore')->name('explore_and_discover');
 Route::get('/motivate_and_train', 'AboutitemController@train')->name('motivate_and_train');
 
-
+Route::view('event', 'admin.events.create');
 
 
 

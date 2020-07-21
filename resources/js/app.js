@@ -5,7 +5,7 @@ window.$ = window.jQuery = require('jquery');
 window.Cookies = require('js-cookie');
 
 require('jquery-ui');
-require('bootstrap-select');
+// require('bootstrap-select');
 
 
 require('lightgallery');
@@ -21,7 +21,7 @@ require('lg-share');
 //require('pdfjs');
 require('./custom');
 require('./slick');
-
+require('./components/react/index')
 window.stepper = require('materialize-stepper');
 window.MStepper = "materialize-stepper/dist/js/mstepper";
 

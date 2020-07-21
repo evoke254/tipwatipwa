@@ -1,5 +1,9 @@
 @extends('layouts.app_admin')
 @section('content')
+
+<div id="app">
+
+</div>
 <div class="container">
   <div class="row d-flex justify-content-center">
       <div class="col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center">
@@ -63,7 +67,7 @@
                     </select>
                   </div>
                 </div>
-                
+
                 <div class="form-group row">
                   <label for='image' class="col-sm-3 col-form-label"> Image</label>
                   <div class="col-md-12">
@@ -73,7 +77,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">  
+              <div class="col-md-6">
               <div class="form-group row">
                 <label for='venue' class="col-sm-3 col-form-label"> Venue</label>
                 <div class="col-md-12">
@@ -243,7 +247,7 @@
                 </div>
                     </div>
               </div>
-            <div class="col-md-6">  
+            <div class="col-md-6">
               <div class="form-group row " id="evenue">
                 <label for='venue' class="col-sm-3 col-form-label"> Venue</label>
                 <div class="col-md-12">
@@ -289,7 +293,7 @@
         </form>
       </div>
       <div class="modal-footer">
- 
+
             <button type="button" class="btn btn-md btn-grey" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-md btn-dark-green" id="createClassEvent">Create Event</button>
       </div>
@@ -312,7 +316,7 @@
                 today: 'icon ion-ios-calendar',
                 clear: 'icon ion-ios-trash',
                 close: 'icon ion-ios-close-circle-outline'
-            } }); 
+            } });
 
       $('#calendar').fullCalendar({
             // put your options and callbacks here
@@ -356,7 +360,7 @@
             $('#start').val(moment(calEvent.start).format('YYYY-MM-DD HH:mm:ss'));
             $('#finish').val(moment(calEvent.end).format('YYYY-MM-DD HH:mm:ss'));
             $('#editModal').modal({backdrop: false});
-            
+
         }
         });
 
@@ -379,9 +383,9 @@
                   $('#trainer').hide();
                   $('#recurrence').hide();
 
-                } 
+                }
               else if(x==='Class')
-                { 
+                {
                   $('#evenue').hide();
                   $('#etitle').hide();
                   $('#monthly').show();

@@ -18,7 +18,7 @@
     <div class="page-wrapper chiller-theme toggled">
       @include('partials.sidebar')
       <main class="page-content">
-        <div class="" id="app">
+        <div class="">
             @yield('content')
           </div>
       </main>
@@ -26,16 +26,16 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js"></script>
-    
+
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
-    
+
     @include('sweetalert::alert')
     <script>
         $( document ).ready(function() {
             window.CKEDITOR_BASEPATH = "{{ asset('ckeditor') }}";
         });
         @yield('scripts')
-    
+
     </script>
 </body>
-</html> 
+</html>

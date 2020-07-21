@@ -26,8 +26,9 @@
 
 
 @import '~fullcalendar/main.min.css';
-@import '~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
+// @import '~bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css';
 
 @import 'kahaki';
 
 @import 'materialize-stepper';
+@import "~tempusdominus-bootstrap/src/sass/tempusdominus-bootstrap-build.scss"; // Or the one above.
