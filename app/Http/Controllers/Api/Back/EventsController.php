@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Back;
 
 use App\Event;
+use App\EventImage;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,6 +22,10 @@ class EventsController extends Controller
         $all = ['data'=>Event::all()];
         return response()->json($all);
     }
+    public function uploadFiles(Request $request)
+    {
+        return response()->json($request);
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -30,6 +35,7 @@ class EventsController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json($request);
         $title = $request->get('title');
         $description = $request->get('description');
         $venue = $request->get('location');
@@ -40,7 +46,7 @@ class EventsController extends Controller
         $category_id = $request->get('category_id');
         $sub_category_id = $request->get('subCategory_id');
 
-            $newEvent = Event::create([
+        $newEvent = Event::create([
                 'title'=>$title,
                 'category_id'=>$category_id,
                 'subCategory_id'=>$sub_category_id,
@@ -54,10 +60,20 @@ class EventsController extends Controller
                 'endTime'=>$endTime,
                 'status'=>'active'
             ]);
-            return response()->json(json_encode($newEvent));
+            // return response()->json($newEvent);
+            $images =[];
+
+            foreach ($request->file('images') as $key => $value) {
+                $fileName = $request->file('images')[$key]->store('public/event_images');
+                $eventImage = EventImage::create([
+                    'path'=>$fileName,
+                    'event_id'=>$newEvent->id,
+                ]);
+                $images[]=$eventImage;
+            }
+            return response()->json(json_encode($images));
 
     }
-
     /**
      * Display the specified resource.
      *
