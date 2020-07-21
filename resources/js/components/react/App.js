@@ -25,7 +25,7 @@ function App() {
         <Route exact path='/admin/questions' component={QuestionsRead}/>
         <Route exact path='/admin/questions/create' component={QuestionsCreate}/>
         <Route exact path='/admin/mailconfig' component={MailConfig}/>
-        <Route exact path='/admin/schedule' component={SchedulesRead}/>
+        {/* <Route exact path='/admin/schedule' component={SchedulesRead}/> */}
         <Route exact path='/admin/schedule/create' component={ScheduleCreate}/>
         <Route exact path='/eventlist' component={EventRead}/>
         <Route exact path='/eventview' component={EventView}/>

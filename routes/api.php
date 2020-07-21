@@ -20,4 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('admin')->group(function(){
     Route::apiResource('events','Api\Back\EventsController');
 });
+Route::get('events','Api\Back\EventsController@index' );
 Route::post('uplaodFiles', 'Api\EventsController@filesUpload');

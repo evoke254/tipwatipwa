@@ -17,7 +17,7 @@ class CreateEventImagesTable extends Migration
             $table->id();
             $table->string('path');
             $table->bigInteger('event_id');
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Back;
 
 use App\Event;
 use App\EventImage;
+use App\EventsModel\Event as EventsModelEvent;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,8 +20,18 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $all = ['data'=>Event::all()];
-        return response()->json($all);
+        $events = Event::all();
+        $filteredEvents=[];
+        foreach ($events as $event) {
+            // dump($event->toArray());
+            $images =EventImage::where('event_id',$event->id)->first()->get();
+            $imageProp = array(['image_url'=>$images[0]->path]);
+            $newObj =array_merge($event->toArray(),$imageProp);
+            $filteredEvents[] = $newObj;
+        }
+
+        // $all = ['data'=>Event::all()];
+        return response()->json($filteredEvents);
     }
     public function uploadFiles(Request $request)
     {

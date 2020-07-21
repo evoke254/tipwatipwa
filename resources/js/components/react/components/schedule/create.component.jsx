@@ -359,8 +359,6 @@ const ScheduleCreate = () => {
                 setserverResponse(error);
             });
 
-        // console.log(allData);
-        // axioPost(allData);
     };
     const handleEventDetails = data => {
         if (data) {
@@ -380,7 +378,6 @@ const ScheduleCreate = () => {
         setcurrentStep(4);
     };
 
-    console.log("currentStep", currentStep);
 
     return (
         <MainLayout>
@@ -398,11 +395,6 @@ const ScheduleCreate = () => {
                             </h4>
                         </div>
                     </div>
-                    <form
-                        className="validate-form"
-                        onSubmit={event => event.preventDefault()}
-                        method="POST"
-                    >
                         {
                             <div className="step-title waves-effect">
                                 Event {stepTitles[currentStep - 1]}
@@ -411,11 +403,6 @@ const ScheduleCreate = () => {
                         <div className="step-content">
                             <div className="form-group row">
                                 <div className="col-md-12">
-                                <EventImages
-                                            onFileChange={data =>
-                                                handleEventImages(data)
-                                            }
-                                        />
                                     {currentStep == 1 && (
                                         <EventCategorySelector
                                             onSelectALL={event =>
@@ -445,7 +432,7 @@ const ScheduleCreate = () => {
                             <div className="step-actions">
                                 {/* Here goes your actions buttons */}
 
-                                {currentStep < 4 ||
+                                {currentStep >1 &&
                                     (serverResponse && (
                                         <button
                                             onClick={() => {
@@ -464,12 +451,11 @@ const ScheduleCreate = () => {
                                             onClick={submitAllData}
                                             className={`waves-effect waves-dark btn next-step  btn-success`}
                                         >
-                                            Submit
+                                            Create New Event
                                         </button>
                                     )}
                             </div>
                         </div>
-                    </form>
                 </div>
             </div>
         </MainLayout>
