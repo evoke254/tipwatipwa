@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./read.styles.scss";
-import {faCalendar,faMapPin} from '@fortawesome/free-solid-svg-icons'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faCalendar, faMapPin,faClock } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Axios from "axios";
 
 const EventRead = props => {
     const elements = [1, 2, 3, 4];
+    const [events, setevents] = useState([]);
+    const [eventLoaded, seteventLoaded] = useState(false);
+    useEffect(() => {
+        if (!eventLoaded) {
+            Axios.get("http://127.0.0.1:8000/api/events")
+                .then(res => {
+                    setevents(res.data);
+                    seteventLoaded(true);
+                })
+                .catch(error => console.log(error));
+        }
+
+        // return () => {
+        //     cleanup
+        // }
+    });
     return (
         <section
             className="eventRead animated slower wow fadeInUp"
@@ -17,9 +34,9 @@ const EventRead = props => {
                             List of All Events
                         </h2>
                     </div>
-                    <div className="events-wrapper">
-                        {elements.map(element => (
-                            <div className="col my-4">
+                    <div className="events-wrapper row">
+                        {events.map(element => (
+                            <div key={element.id} className="col-md-4 my-4">
                                 <div className="card">
                                     <div className="view overlay">
                                         <img
@@ -28,8 +45,8 @@ const EventRead = props => {
                                                 height: "350px",
                                                 objectFit: "cover"
                                             }}
-                                            src={window.location.host+"/images/woman-abs-workout-dumbbell.jpg"}
-                                            alt="Swift Apps Africa"
+                                            src={element.image_url}
+                                            alt={element.title}
                                         />
 
                                         <a href="#!">
@@ -38,11 +55,31 @@ const EventRead = props => {
                                     </div>
                                     <div className="card-body">
                                         <p className="card-title text-center short-border">
-                                            Virtual Fitness Sessions
+                                            {element.title}
                                         </p>
                                         <div className="event-details">
-                                            <div className="location"><FontAwesomeIcon icon={faMapPin}/> Nairobi</div>
-                                            <div className="date"><FontAwesomeIcon icon={faCalendar}/> 31 05 2000</div>
+                                            <div className="location">
+                                                <FontAwesomeIcon
+                                                    icon={faMapPin}
+                                                />
+                                                {element.venue}
+                                            </div>
+                                            <div className="date">
+                                                <FontAwesomeIcon
+                                                    icon={faCalendar}
+                                                />
+                                                {new Date(element.startDate).getDate() +
+                                                    "-" +
+                                                    new Date(element.endDate).getDate()}
+                                            </div>
+                                            <div className="time">
+                                                <FontAwesomeIcon
+                                                    icon={faClock}
+                                                />
+                                                {element.startTime +
+                                                    "-" +
+                                                    element.endTime}
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

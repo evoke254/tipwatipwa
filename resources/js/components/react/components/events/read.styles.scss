@@ -1,15 +1,17 @@
 .eventRead{
-
+width: 100%;
 .events-wrapper{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 20px;
+    // display: flex;
+    // flex-direction: row;
+    // justify-content: space-around;
+    // flex-wrap: wrap;
+    // padding: 20px;
+    width: 100%;
+
 }
 .event-details{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
 }
 }

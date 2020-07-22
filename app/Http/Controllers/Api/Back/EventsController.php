@@ -85,15 +85,30 @@ class EventsController extends Controller
             return response()->json(json_encode($images));
 
     }
+    private function getImage($id){
+
+        $image =EventImage::find($id)->first();
+        $imageProp ='http://'. request()->getHttpHost().'/'. str_replace('public','storage',$image->path);
+
+        return $imageProp;
+    }
     /**
      * Display the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Event $event,$eventId)
     {
-        //
+        $eventDetails = Event::find($eventId);
+        // return response()->json($eventDetails);
+        $image = $this->getImage($eventDetails->id);
+        $eventArray =$eventDetails->toArray();
+        $mergedArray = array_merge($eventArray,['image_url'=>$image]);
+
+        return response()->json($mergedArray);
+
+
     }
 
     /**

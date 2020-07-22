@@ -28,7 +28,7 @@ function App() {
         {/* <Route exact path='/admin/schedule' component={SchedulesRead}/> */}
         <Route exact path='/admin/schedule/create' component={ScheduleCreate}/>
         <Route exact path='/eventlist' component={EventRead}/>
-        <Route exact path='/eventview' component={EventView}/>
+        <Route exact path='/eventview/:eventId' component={EventView}/>
     </Switch>
   );
 }

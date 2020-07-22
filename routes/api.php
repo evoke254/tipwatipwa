@@ -21,4 +21,5 @@ Route::prefix('admin')->group(function(){
     Route::apiResource('events','Api\Back\EventsController');
 });
 Route::get('events','Api\Back\EventsController@index' );
-Route::post('uplaodFiles', 'Api\EventsController@filesUpload');
+Route::get('eventview/{eventId}','Api\Back\EventsController@show' );
+Route::post('uplaodFiles', 'Api\Back\EventsController@filesUpload');

@@ -5,13 +5,14 @@
         width: 100%;
         .event-image-wrapper {
             padding: 0;
-            height: 500px;
-            width: 100%;
-            margin-bottom: 50px;
+            height: 500px !important;
+            width: inherit;
+            padding-bottom: 50px;
             img {
                 margin: auto;
                 overflow: hidden;
-                min-width: 500px;
+                width: inherit;
+                height: inherit;
             }
         }
         .event-details {
@@ -41,9 +42,12 @@
             }
             .event-description-wrapper {
                 color: white;
-                font-size: 14px;
+                // font-size: 14px;
                 font-weight: normal;
-                line-height: 28px;
+                // line-height: 28px;
+                p{
+                    font-size: 16px;
+                }
             }
         }
     }

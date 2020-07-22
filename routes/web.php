@@ -22,7 +22,7 @@ Route::get('/explore_and_discover', 'AboutitemController@explore')->name('explor
 Route::get('/motivate_and_train', 'AboutitemController@train')->name('motivate_and_train');
 Route::view('eventlist', 'FrontEnd.Events.read');
 Route::view('event', 'admin.events.create');
-Route::view('eventview', 'FrontEnd.Events.view');
+Route::view('eventview/{eventId}', 'FrontEnd.Events.view');
 
 
 
