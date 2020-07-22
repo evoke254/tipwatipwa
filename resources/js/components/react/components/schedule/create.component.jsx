@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import MainLayout from "../main/MainLayout.component";
 import "./create.styles.scss";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -380,7 +379,6 @@ const ScheduleCreate = () => {
 
 
     return (
-        <MainLayout>
             <div className="ScheduleCreate">
                 <div
                     className="container mt-4"
@@ -458,7 +456,7 @@ const ScheduleCreate = () => {
                         </div>
                 </div>
             </div>
-        </MainLayout>
+
     );
 };
 

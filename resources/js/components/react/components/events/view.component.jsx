@@ -8,6 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
+import Moment from "react-moment";
 
 const EventView = ({
     match: {
@@ -55,7 +56,7 @@ const EventView = ({
                             </div>
                             <div className="event-details">
                                 <div className="price-wrapper">
-                                    <span>{event.cost}</span>
+                                    <span>KES {event.cost}</span>
                                 </div>
                                 <div className="event-title">
                                     <p className="h1 title">{event.title}</p>
@@ -64,18 +65,12 @@ const EventView = ({
                                     <div className="detail-item date-wrapper">
                                         <FontAwesomeIcon icon={faCalendar} />
                                         <span>
-                                            {' '+event.startDate +
-                                                " - " +
-                                                event.endDate}
+                                            <Moment format="D MMM YYYY" date={event.startDate} />
                                         </span>
                                     </div>
                                     <div className="detail-item time">
                                         <FontAwesomeIcon icon={faClock} />
-                                        <span>
-                                            {' '+event.startTime +
-                                                " " +
-                                                event.endTime}
-                                        </span>
+                                        <span><Moment utc={event.startTime} format="HH mm"/></span>
                                     </div>
                                     <div className="detail-item location-wrapper">
                                         <FontAwesomeIcon icon={faMapPin} />{" "}
@@ -84,6 +79,9 @@ const EventView = ({
                                 </div>
                                 <div className="event-description-wrapper">
                                     {ReactHtmlParser(event.desc)}
+                                </div>
+                                <div className="event-action">
+                                    <button className="btn btn-success"> Buy Ticket</button>
                                 </div>
                             </div>
                         </div>

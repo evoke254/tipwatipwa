@@ -3,6 +3,7 @@ import "./read.styles.scss";
 import { faCalendar, faMapPin,faClock } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
+import Moment from "react-moment";
 
 const EventRead = props => {
     const elements = [1, 2, 3, 4];
@@ -68,17 +69,13 @@ const EventRead = props => {
                                                 <FontAwesomeIcon
                                                     icon={faCalendar}
                                                 />
-                                                {new Date(element.startDate).getDate() +
-                                                    "-" +
-                                                    new Date(element.endDate).getDate()}
+                                                <Moment date={element.startDate} format="DD MMM YYYY"/>
                                             </div>
                                             <div className="time">
                                                 <FontAwesomeIcon
                                                     icon={faClock}
                                                 />
-                                                {element.startTime +
-                                                    "-" +
-                                                    element.endTime}
+                                                <Moment utc={element.startTime} format="HH:mm"/>
                                             </div>
                                         </div>
                                     </div>

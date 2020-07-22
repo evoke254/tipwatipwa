@@ -18,7 +18,10 @@
     <div class="page-wrapper chiller-theme toggled">
       @include('partials.sidebar')
       <main class="page-content">
-        <div class="">
+          <div id="create-event">
+              @yield('react')
+          </div>
+        <div class="" id="app">
             @yield('content')
           </div>
       </main>

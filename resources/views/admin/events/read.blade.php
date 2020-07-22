@@ -16,7 +16,7 @@
             <div class="table-responsive">
               <table id="kahakidt" class="table table-striped table-hover">
                 <thead>
-                  <tr> 
+                  <tr>
                       @foreach($fields as $field)
                         <th class="text-nowrap" scope="col">{{$field}}</th>
                       @endforeach
@@ -48,11 +48,11 @@
   </div>
 </div>
 
-      
+
 
 @endsection
 @section('scripts')
-  
+
   $(document).ready(function () {
     $('#kahakidt').DataTable({
         responsive: true,

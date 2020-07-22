@@ -13,6 +13,13 @@ use function GuzzleHttp\Promise\all;
 
 class EventsController extends Controller
 {
+    private function getImage($event_id){
+
+        $image =EventImage::where('event_id',$event_id)->get()->first();
+        $imageProp ='http://'. request()->getHttpHost().'/'. str_replace('public','storage',$image->path);
+
+        return $imageProp;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,9 +31,9 @@ class EventsController extends Controller
         $filteredEvents=[];
         foreach ($events as $event) {
             // dump($event->toArray());
-            $images =EventImage::where('event_id',$event->id)->first()->get();
-            $imageProp = array(['image_url'=>$images[0]->path]);
-            $newObj =array_merge($event->toArray(),$imageProp);
+            // $images =EventImage::where('event_id',$event->id)->first()->get();
+            $imageProp = $this->getImage($event->id);
+            $newObj =array_merge($event->toArray(),['image_url'=>$imageProp]);
             $filteredEvents[] = $newObj;
         }
 
@@ -85,13 +92,7 @@ class EventsController extends Controller
             return response()->json(json_encode($images));
 
     }
-    private function getImage($id){
 
-        $image =EventImage::find($id)->first();
-        $imageProp ='http://'. request()->getHttpHost().'/'. str_replace('public','storage',$image->path);
-
-        return $imageProp;
-    }
     /**
      * Display the specified resource.
      *

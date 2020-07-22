@@ -1,9 +1,5 @@
 @extends('layouts.app_admin')
 @section('content')
-
-<div id="app">
-
-</div>
 <div class="container">
   <div class="row d-flex justify-content-center">
       <div class="col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center">

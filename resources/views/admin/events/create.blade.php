@@ -1,10 +1,7 @@
 @extends('layouts.app_admin')
 
-@section('content')
+@section('react')
 
-<div id="create-event">
-
-</div>
 @endsection
 
 
