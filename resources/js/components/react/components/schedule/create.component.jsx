@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./create.styles.scss";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -6,25 +6,25 @@ import Axios from "axios";
 import { DropzoneArea } from "material-ui-dropzone";
 
 export const EventDetails = ({ onFormSubmit }) => {
-    const [title, settitle] = useState(null);
-    const [location, setLocation] = useState(null);
-    const [startTime, setStartTime] = useState(null);
-    const [description, setDescription] = useState(null);
-    const [startDate, setStartDate] = useState(null);
-    const [endDate, setEndDate] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const [title, settitle] = useState('');
+    const [location, setLocation] = useState('');
+    const [startTime, setStartTime] = useState('');
+    const [description, setDescription] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [endTime, setEndTime] = useState('');
     const [formHasError, setformHasError] = useState(null);
 
     const handleResponse = event => {
         event.preventDefault();
         if (
-            (title,
-            location,
-            startTime,
-            endTime,
-            startDate,
-            endDate,
-            description)
+            (title.length>0,
+            location.length>0,
+            startTime.length>0,
+            endTime.length>0,
+            startDate.length>0,
+            endDate.length>0,
+            description.length>0)
         ) {
             const formData = {
                 title,
@@ -212,39 +212,28 @@ export const EventImages = ({ onFileChange }) => {
 export const EventCategorySelector = ({ onSelectALL }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
+    const [categories, setcategories] = useState([])
+    const [isLoaded, setisLoaded] = useState(false)
 
-    const categories = [
-        {
-            id: 1,
-            name: "fitness for all",
-            subCategories: [
-                {
-                    id: 2,
-                    name: "fi subcategory name"
-                }
-            ]
-        },
-        {
-            id: 3,
-            name: "explore and discover",
-            subCategories: [
-                {
-                    id: 4,
-                    name: "f2 subcategory name"
-                }
-            ]
-        },
-        {
-            id: 5,
-            name: "train and motivate",
-            subCategories: [
-                {
-                    id: 5,
-                    name: "f3subcategory name"
-                }
-            ]
+
+    useEffect(() => {
+        if (!isLoaded) {
+              Axios.get('http://3d115aa0d4a1.ngrok.io/api/admin/event/category')
+        .then(res=>{
+            console.log(res.data)
+            setcategories(res.data)
+            setisLoaded(true);
+        }).catch(error=>{
+            alert("Error fetching categories from server. Reason:"+error.message);
+        });
         }
-    ];
+
+
+
+        // return () => {
+
+        // }
+    })
 
     const handleNextStep = () => {
         const data = { selectedCategory, selectedSubCategory };
@@ -255,7 +244,7 @@ export const EventCategorySelector = ({ onSelectALL }) => {
             <div className="form-group">
                 <label htmlFor="category"> Category</label>
 
-                <select
+               {categories.length>0 &&  <select
                     name="category"
                     id="category"
                     className="form-control"
@@ -267,7 +256,7 @@ export const EventCategorySelector = ({ onSelectALL }) => {
                     {categories.map(element => (
                         <option value={element.id}>{element.name}</option>
                     ))}
-                </select>
+                </select>}
             </div>
             <br />
             <br />
@@ -287,9 +276,9 @@ export const EventCategorySelector = ({ onSelectALL }) => {
                         </option>
                         {categories
                             .filter(
-                                category => (category.id = selectedCategory)
+                                category => (category.id == selectedCategory)
                             )[0]
-                            .subCategories.map(element => (
+                            .sub_categories.map(element => (
                                 <option value={element.id}>
                                     {element.name}
                                 </option>

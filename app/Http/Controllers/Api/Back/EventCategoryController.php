@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Back;
 
+use App\EventCategory;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -14,18 +15,9 @@ class EventCategoryController extends Controller
      */
     public function index()
     {
-        //
+        return EventCategory::with('SubCategories')->get();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -35,7 +27,14 @@ class EventCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $eventCategory = EventCategory::create([
+                'name' => $request->input('name')
+            ]);
+            return response()->json($eventCategory);
+        } catch (\Exception $exception) {
+            return response()->json($exception->getMessage(), 500);
+        }
     }
 
     /**
