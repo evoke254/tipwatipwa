@@ -16,6 +16,7 @@ class CreateEventSubcategoryTable extends Migration
         Schema::create('events_subcategory', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->bigInteger('category_id');
             $table->timestamps();
         });
     }

@@ -1,14 +1,14 @@
-<template>           
+<template>
   <div>
     <div class="row justify-content-center align-items-center">
        <div class="col">
           <i class="fas fa-plus-circle fa-2x mr-4 green p-1 white-text rounded hoverable myPointer mb-3" style="font-size: 30px" aria-hidden="true" v-on:click="getmymodal"></i>
-                <FullCalendar 
+                <FullCalendar
                   height='700px'
                   :options="calendarOptions"
               />
           </div>
-    </div>       
+    </div>
   </div>
 </template>
 <style lang='scss'>
@@ -75,7 +75,7 @@ import datePicker from 'vue-bootstrap-datetimepicker';
                         close: 'icon ion-ios-close-circle-outline'
                     },
                 },
-                myselectedevent: [],    
+                myselectedevent: [],
               }
             },
         methods: {

@@ -17,7 +17,6 @@ class EventsController extends Controller
 
         $image =EventImage::where('event_id',$event_id)->get()->first();
         $imageProp ='http://'. request()->getHttpHost().'/'. str_replace('public','storage',$image->path);
-
         return $imageProp;
     }
     /**

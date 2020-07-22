@@ -43,7 +43,7 @@ Route::get('/forms', 'FormsController@forms')->name('forms');
 Route::get('/download/form/{id}', 'FormsController@download');
 Route::get('/download/bulletin/{id}', 'BulletinController@download');
 Route::get('/trainers', 'PageController@trainers')->name('trainers');
-Route::view('events', 'FrontEnd.Events.view');
+// Route::view('events', 'FrontEnd.Events.view');
 
 Route::post('/subscribe', 'SubscriberController@store');
 
@@ -88,7 +88,8 @@ Route::prefix('admin')->group(function() {
 	Route::resource('blog', 'BlogController');
 	Route::resource('gallery', 'GalleryController');
 	Route::resource('questions', 'QuestionController');
-	Route::resource('service', 'ServiceController');
+    Route::resource('service', 'ServiceController');
+    Route::view('event/category', 'admin.events.category.index');
 
 	//Route::match(['get'], 'services', 'AdminController@services');
 	//Route::match(['post','patch'], 'services/{id}', 'AdminController@update');
