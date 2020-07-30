@@ -50,7 +50,7 @@ const EventRead = props => {
                                             alt={element.title}
                                         />
 
-                                        <a href="#!">
+                                        <a href={"http://127.0.0.1:8000/eventview/"+element.id}>
                                             <div className="mask rgba-white-slight" />
                                         </a>
                                     </div>

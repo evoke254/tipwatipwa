@@ -4,27 +4,29 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import Axios from "axios";
 import { DropzoneArea } from "material-ui-dropzone";
+import SweetAlert from "react-bootstrap-sweetalert";
+import { Redirect } from "react-router-dom";
 
 export const EventDetails = ({ onFormSubmit }) => {
-    const [title, settitle] = useState('');
-    const [location, setLocation] = useState('');
-    const [startTime, setStartTime] = useState('');
-    const [description, setDescription] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [endDate, setEndDate] = useState('');
-    const [endTime, setEndTime] = useState('');
+    const [title, settitle] = useState("");
+    const [location, setLocation] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [description, setDescription] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [endTime, setEndTime] = useState("");
     const [formHasError, setformHasError] = useState(null);
 
     const handleResponse = event => {
         event.preventDefault();
         if (
-            (title.length>0,
-            location.length>0,
-            startTime.length>0,
-            endTime.length>0,
-            startDate.length>0,
-            endDate.length>0,
-            description.length>0)
+            (title.length > 0,
+            location.length > 0,
+            startTime.length > 0,
+            endTime.length > 0,
+            startDate.length > 0,
+            endDate.length > 0,
+            description.length > 0)
         ) {
             const formData = {
                 title,
@@ -212,28 +214,32 @@ export const EventImages = ({ onFileChange }) => {
 export const EventCategorySelector = ({ onSelectALL }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
-    const [categories, setcategories] = useState([])
-    const [isLoaded, setisLoaded] = useState(false)
-
+    const [categories, setcategories] = useState([]);
+    const [isLoaded, setisLoaded] = useState(false);
 
     useEffect(() => {
         if (!isLoaded) {
-              Axios.get('http://3d115aa0d4a1.ngrok.io/api/admin/event/category')
-        .then(res=>{
-            console.log(res.data)
-            setcategories(res.data)
-            setisLoaded(true);
-        }).catch(error=>{
-            alert("Error fetching categories from server. Reason:"+error.message);
-        });
+            Axios.get("http://127.0.0.1:8000/api/admin/event/category", {
+                headers: { crossDomain: true }
+            })
+
+                .then(res => {
+                    console.log(res.data);
+                    setcategories(res.data);
+                    setisLoaded(true);
+                })
+                .catch(error => {
+                    alert(
+                        "Error fetching categories from server. Reason:" +
+                            error.message
+                    );
+                });
         }
-
-
 
         // return () => {
 
         // }
-    })
+    });
 
     const handleNextStep = () => {
         const data = { selectedCategory, selectedSubCategory };
@@ -244,19 +250,24 @@ export const EventCategorySelector = ({ onSelectALL }) => {
             <div className="form-group">
                 <label htmlFor="category"> Category</label>
 
-               {categories.length>0 &&  <select
-                    name="category"
-                    id="category"
-                    className="form-control"
-                    onChange={event => setSelectedCategory(event.target.value)}
-                >
-                    <option value={0} selected="selected" disabled>
-                        Event Category
-                    </option>
-                    {categories.map(element => (
-                        <option value={element.id}>{element.name}</option>
-                    ))}
-                </select>}
+                {categories.length > 0 && (
+                    <select
+                        name="category"
+                        id="category"
+                        className="form-control"
+                        defaultValue='0'
+                        onChange={event =>
+                            setSelectedCategory(event.target.value)
+                        }
+                    >
+                        <option value={0} disabled>
+                            Event Category
+                        </option>
+                        {categories.map(element => (
+                            <option key={element.id} value={element.id}>{element.name}</option>
+                        ))}
+                    </select>
+                )}
             </div>
             <br />
             <br />
@@ -267,19 +278,20 @@ export const EventCategorySelector = ({ onSelectALL }) => {
                         name="category"
                         id="category"
                         className="form-control"
+                        defaultValue='0'
                         onChange={event =>
                             setSelectedSubCategory(event.target.value)
                         }
                     >
-                        <option value={0} selected="selected" disabled>
+                        <option value={0} disabled>
                             Event Sub Category
                         </option>
                         {categories
                             .filter(
-                                category => (category.id == selectedCategory)
+                                category => category.id == selectedCategory
                             )[0]
                             .sub_categories.map(element => (
-                                <option value={element.id}>
+                                <option key={element.id} value={element.id}>
                                     {element.name}
                                 </option>
                             ))}
@@ -297,56 +309,121 @@ export const EventCategorySelector = ({ onSelectALL }) => {
         </div>
     );
 };
+export const LoadingAnimation =()=>(
+    <div className="d-flex justify-content-center">
+    <div>
+        <div
+            className="spinner-grow text-primary"
+            role="status"
+        >
+            <span className="sr-only">
+                Loading...
+            </span>
+        </div>
+        <div
+            className="spinner-grow text-secondary"
+            role="status"
+        >
+            <span className="sr-only">
+                Loading...
+            </span>
+        </div>
+        <div
+            className="spinner-grow text-success"
+            role="status"
+        >
+            <span className="sr-only">
+                Loading...
+            </span>
+        </div>
+        <div
+            className="spinner-grow text-danger"
+            role="status"
+        >
+            <span className="sr-only">
+                Loading...
+            </span>
+        </div>
+        <div
+            className="spinner-grow text-warning"
+            role="status"
+        >
+            <span className="sr-only">
+                Loading...
+            </span>
+        </div>
+        <div
+            className="spinner-grow text-info"
+            role="status"
+        >
+            <span className="sr-only">
+                Loading...
+            </span>
+        </div>
+        <div
+            className="spinner-grow text-light"
+            role="status"
+        >
+            <span className="sr-only">
+                Loading...
+            </span>
+        </div>
+        <div
+            className="spinner-grow text-dark"
+            role="status"
+        >
+            <span className="sr-only">
+                Loading...
+            </span>
+        </div>
+    </div>
+</div>
+
+)
 const ScheduleCreate = () => {
     const [currentStep, setcurrentStep] = useState(1);
-    const stepTitles = [
-        "Category",
-        "Details",
-        "Images",
-        "Now Subitting to database"
-    ];
+    const stepTitles = ["Category", "Details", "Images"];
     const [eventDetails, seteventDetails] = useState(null);
     const [eventCategory, seteventCategory] = useState(null);
     const [eventImages, seteventImages] = useState(null);
     const [serverResponse, setserverResponse] = useState(null);
+    const [dataSubmitted, setdataSubmitted] = useState(false);
+    const [issubmitting, setissubmitting] = useState(false);
     const submitAllData = () => {
         const data = new FormData();
         const category_id = parseInt(eventCategory.selectedCategory);
         const subCategory_id = parseInt(eventCategory.selectedSubCategory);
 
-
-        data.append('category_id',category_id)
-        data.append('subCategory_id',subCategory_id)
+        data.append("category_id", category_id);
+        data.append("subCategory_id", subCategory_id);
         for (const key in eventDetails) {
-            data.append(key,eventDetails[key])
+            data.append(key, eventDetails[key]);
         }
-        eventImages.map(element=>data.append('images[]',element))
-        // const allData = {
-        //     ...eventDetails,
-        //     category_id,
-        //     subCategory_id,
-        //     eventImages
-        // };
+        eventImages.map(element => data.append("images[]", element));
         const url = "http://3d115aa0d4a1.ngrok.io/api/admin/events";
+        setissubmitting(true);
         Axios.post(url, data, {
-            crossDomain:true,
+            crossDomain: true,
 
             headers: {
                 "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-                "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token",
+                "Access-Control-Allow-Methods":
+                    "GET, POST, PATCH, PUT, DELETE, OPTIONS",
+                "Access-Control-Allow-Headers":
+                    "Origin, Content-Type, X-Auth-Token",
                 "Content-Type": "multipart/form-data"
             }
         })
             .then(res => {
                 console.log(res);
-                setserverResponse(res);
+                setdataSubmitted(true);
+                setissubmitting(false);
             })
             .catch(error => {
-                console.log(res);
-                setserverResponse(error);
+                console.log(error.response.data);
+                setserverResponse(error.message);
+                setissubmitting(false);
             });
-
     };
     const handleEventDetails = data => {
         if (data) {
@@ -361,91 +438,124 @@ const ScheduleCreate = () => {
         }
     };
     const handleEventImages = data => {
-        console.log(...data)
+        console.log(...data);
         seteventImages(data);
         setcurrentStep(4);
     };
+    const handleRedirect = ()=>{
+        console.log('redirect called');
 
-
+        return  <Redirect to={{
+            pathname:'admin/schedule'
+        }}/>
+    }
     return (
-            <div className="ScheduleCreate">
-                <div
-                    className="container mt-4"
-                    data-animation="true"
-                    data-animation-type="fadeInUp"
+        <div className="ScheduleCreate">
+
+            {dataSubmitted && (
+                <SweetAlert
+                    onConfirm={()=>{
+                        console.log('confim,called');
+                       setcurrentStep(1)
+                       setdataSubmitted(false)
+                    }}
+                    success
+                    title="Event was created successfully"
                 >
-                    <div className="row d-flex justify-content-center">
-                        <div className="col-md-12 col-lg-12 col-sm-12 text-center">
-                            <h4 className="deep-orange-text">
-                                Add Event to Calendar
-                                <p />
-                            </h4>
-                        </div>
+                    Page will now reload
+                </SweetAlert>
+            )}
+            {serverResponse && (
+                <SweetAlert
+                    onConfirm={() => {
+                        setserverResponse(null);
+                        setdataSubmitted(false)
+
+                    }}
+                    danger
+                    title="We encountered an error"
+                >
+                    {serverResponse}
+                </SweetAlert>
+            )}
+
+            <div
+                className="container mt-4"
+                data-animation="true"
+                data-animation-type="fadeInUp"
+            >
+                <div className="row d-flex justify-content-center">
+                    <div className="col-md-12 col-lg-12 col-sm-12 text-center">
+                        <h4 className="deep-orange-text">
+                            Add Event to Calendar
+                            <p />
+                        </h4>
                     </div>
-                        {
-                            <div className="step-title waves-effect">
-                                Event {stepTitles[currentStep - 1]}
-                            </div>
-                        }
-                        <div className="step-content">
-                            <div className="form-group row">
-                                <div className="col-md-12">
-                                    {currentStep == 1 && (
-                                        <EventCategorySelector
-                                            onSelectALL={event =>
-                                                handleEventCategory(event)
-                                            }
-                                        />
-                                    )}
-                                    {eventCategory && currentStep === 2 && (
-                                        <EventDetails
-                                            onFormSubmit={data =>
-                                                handleEventDetails(data)
-                                            }
-                                        />
-                                    )}
-                                    {currentStep === 3 && (
-                                        <EventImages
-                                            onFileChange={data =>
-                                                handleEventImages(data)
-                                            }
-                                        />
-                                    )}
-                                    {/* {currentStep === 4 && (
+                </div>
+                {
+                    <div className="step-title waves-effect">
+                        {currentStep < 4 &&
+                            "Event " + stepTitles[currentStep - 1]}
+                        {issubmitting && (<LoadingAnimation/>)}
+                    </div>
+                }
+                <div className="step-content">
+                    <div className="form-group row">
+                        <div className="col-md-12">
+                            {currentStep == 1 && (
+                                <EventCategorySelector
+                                    onSelectALL={event =>
+                                        handleEventCategory(event)
+                                    }
+                                />
+                            )}
+                            {eventCategory && currentStep === 2 && (
+                                <EventDetails
+                                    onFormSubmit={data =>
+                                        handleEventDetails(data)
+                                    }
+                                />
+                            )}
+                            {currentStep === 3 && (
+                                <EventImages
+                                    onFileChange={data =>
+                                        handleEventImages(data)
+                                    }
+                                />
+                            )}
+                            {/* {currentStep === 4 && (
                                         <div>{serverResponse}</div>
                                     )} */}
-                                </div>
-                            </div>
-                            <div className="step-actions">
-                                {/* Here goes your actions buttons */}
-
-                                {currentStep >1 &&
-                                    (serverResponse && (
-                                        <button
-                                            onClick={() => {
-                                                setcurrentStep(currentStep - 1);
-                                            }}
-                                            className={`waves-effect waves-dark btn next-step `}
-                                        >
-                                            Previous Step
-                                        </button>
-                                    ))}
-                                {eventDetails &&
-                                    eventCategory &&
-                                    eventImages != null &&
-                                    currentStep === 4 && (
-                                        <button
-                                            onClick={submitAllData}
-                                            className={`waves-effect waves-dark btn next-step  btn-success`}
-                                        >
-                                            Create New Event
-                                        </button>
-                                    )}
-                            </div>
                         </div>
+                    </div>
+                    <div className="step-actions">
+                        {/* Here goes your actions buttons */}
+
+                        {currentStep > 1 && (
+                            <button
+                                onClick={() => {
+                                    setcurrentStep(currentStep - 1);
+                                }}
+                                className={`waves-effect waves-dark btn next-step `}
+                            >
+                                Previous Step
+                            </button>
+                        )}
+                        {eventDetails &&
+                            eventCategory &&
+                            eventImages != null &&
+                            currentStep === 4 && !issubmitting &&  (
+                                <button
+                                    onClick={submitAllData}
+                                    className={`waves-effect waves-dark btn next-step  btn-success`}
+                                >
+                                    Submit Event
+                                </button>
+                            )}
+                    </div>
                 </div>
             </div>
-
+        </div>
     );
 };
 

@@ -67,6 +67,7 @@
         "node-sass": "^4.14.1",
         "pdfjs": "^2.3.9",
         "react": "^16.13.1",
+        "react-bootstrap-sweetalert": "^5.1.15",
         "react-dom": "^16.13.1",
         "react-dropzone-uploader": "^2.11.0",
         "react-html-parser": "^2.0.2",

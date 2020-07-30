@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "./index.styles.scss";
 import Axios from "axios";
+import { LoadingAnimation } from "../../schedule/create.component";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 export const CreateEventSubCategory = ({ eventCategories, onSubmit }) => {
-
-    const [name, setname] = useState('')
-    const [parent, setparent] = useState('')
-    const [nameIsValid, setnameIsValid] = useState(false)
-    const [parentIsValid, setparentIsValid] = useState(false)
+    const [name, setname] = useState("");
+    const [parent, setparent] = useState("");
+    const [nameIsValid, setnameIsValid] = useState(false);
+    const [parentIsValid, setparentIsValid] = useState(false);
     const handleSubmit = () => {
-    onSubmit({category_id:parent,name})
-    console.log('parent',parent,'name',name)
-
+        onSubmit({ category_id: parent, name });
+        console.log("parent", parent, "name", name);
     };
 
     return (
@@ -21,10 +21,10 @@ export const CreateEventSubCategory = ({ eventCategories, onSubmit }) => {
             <div className="form-group">
                 <label htmlFor="parent"> Parent Category</label>
                 <select
-                    onChange={event =>  {
+                    onChange={event => {
                         setparent(event.target.value);
-                        setparentIsValid(true);}
-                    }
+                        setparentIsValid(true);
+                    }}
                     defaultValue={parent}
                     name="parent"
                     className="form-control"
@@ -37,38 +37,37 @@ export const CreateEventSubCategory = ({ eventCategories, onSubmit }) => {
                     ))}
                 </select>
             </div>
-                        {parentIsValid &&
-                        <div className={`form-group`}>
-                        <label htmlFor="subcategory_name">Subcategory Name</label>
-                        <input
-                            id="subcategory_name"
-                            value={name}
-                            onChange={event =>
-                                setname(event.target.value)
+            {parentIsValid && (
+                <div className={`form-group`}>
+                    <label htmlFor="subcategory_name">Subcategory Name</label>
+                    <input
+                        id="subcategory_name"
+                        value={name}
+                        onChange={event => setname(event.target.value)}
+                        onBlur={() => {
+                            console.log("onblur called");
+                            if (name.length < 4) {
+                                setnameIsValid(false);
+                            } else {
+                                setnameIsValid(true);
                             }
-                            onBlur={()=>{
-                                console.log('onblur called');
-                                if (name.length<4) {
-                                    setnameIsValid(false)
-
-                                }else{
-                                    setnameIsValid(true)
-                                }
-                            }}
-                            type="text"
-                            className={`form-control `}
-                        />
-                      {!nameIsValid && name.length<4 &&
-                      <span className="text-danger form-control-feedback">Input cannot be less than 3 characters</span>
-
-                      }
-                    </div>
-
-                        }
+                        }}
+                        type="text"
+                        className={`form-control `}
+                    />
+                    {!nameIsValid && name.length < 4 && (
+                        <span className="text-danger form-control-feedback">
+                            Input cannot be less than 3 characters
+                        </span>
+                    )}
+                </div>
+            )}
             <div className="form-group">
-              {nameIsValid && parentIsValid &&  <button onClick={handleSubmit} className="btn">
-                    Create Sub Category
-                </button>}
+                {nameIsValid && parentIsValid && (
+                    <button onClick={handleSubmit} className="btn">
+                        Create Sub Category
+                    </button>
+                )}
             </div>
         </div>
     );
@@ -78,24 +77,37 @@ const EventCategory = () => {
     const [formEventCategory, setformEventCategory] = useState("");
     const [eventCategoryIsLoaded, seteventCategoryIsLoaded] = useState(false);
     const [eventCategories, setEventCategories] = useState([]);
-    const [eventSubCategoryPostSuccess, seteventSubCategoryPostSuccess] = useState(false)
+    const [
+        eventSubCategoryPostSuccess,
+        seteventSubCategoryPostSuccess
+    ] = useState(false);
+    const [isSubmitting, setisSubmitting] = useState(false);
+    const [submitSuccess, setsubmitSuccess] = useState(false);
+    const [errorMessage, seterrorMessage] = useState(null);
     useEffect(() => {
         if (!eventCategoryIsLoaded) {
+            setisSubmitting(true);
+            seterrorMessage(null);
             Axios.get("http://127.0.0.1:8000/api/admin/event/category")
                 .then(res => {
                     setEventCategories(res.data);
+                    setisSubmitting(false)
                     console.log("categories", res.data);
                     seteventCategoryIsLoaded(true);
                 })
                 .catch(error => {
-                    console.log("error", error);
+                    seteventCategoryIsLoaded(true);
+
+                    seterrorMessage(error.message)
+                    console.log("error", error.message);
                 });
         }
     });
 
-
     const handleEventCategoryPost = () => {
         if (formEventCategory) {
+            setisSubmitting(true);
+            seterrorMessage(null);
             const data = new FormData();
             data.append("name", formEventCategory);
             Axios.post(
@@ -115,35 +127,70 @@ const EventCategory = () => {
                 }
             )
                 .then(res => {
+                    setisSubmitting(false);
+                    setsubmitSuccess(true);
                     console.log(res.data);
                 })
                 .catch(error => {
+                    setisSubmitting(false);
+                    seterrorMessage(error.message);
                     console.log("error", error);
                 });
         }
     };
     const handleEventSubcategoryPost = data => {
         seteventSubCategoryPostSuccess(false);
+        seterrorMessage(null)
+        setisSubmitting(true)
+        setsubmitSuccess(false)
         const form = new FormData();
-        form.append('name',data.name)
-        form.append('category_id',data.category_id)
-        Axios.post('http://127.0.0.1:8000/api/admin/event/subcategory',form,{crossDomain:true})
-        .then(res=>{
-            seteventSubCategoryPostSuccess(true)
-
-        }).catch(error=>{
-            console.log(error.message)
+        form.append("name", data.name);
+        form.append("category_id", data.category_id);
+        Axios.post("http://127.0.0.1:8000/api/admin/event/subcategory", form, {
+            crossDomain: true
         })
+            .then(res => {
+                setisSubmitting(false)
+                setsubmitSuccess(true)
+                seteventSubCategoryPostSuccess(true);
+            })
+            .catch(error => {
+                setisSubmitting(false)
+                seterrorMessage(error.message)
+                console.log(error.message);
+            });
     };
 
     return (
         <div className="EventCatgory">
+            {submitSuccess && (
+                <SweetAlert
+                    onConfirm={() => {
+                        setsubmitSuccess(null);
+                    }}
+                    success
+                    title="Action successfully completed"
+                />
+            )}
+            {errorMessage && (
+                <SweetAlert
+                    onConfirm={() => {
+                        setisSubmitting(false)
+                        seterrorMessage(null);
+                    }}
+                    danger
+                    title="An error occured during submission"
+                >
+                    {errorMessage}
+                </SweetAlert>
+            )}
             <div
                 className="container mt-4"
                 data-animation="true"
                 data-animation-type="fadeInUp"
             >
                 <h1 className="text-center">Event Grouping</h1>
+                {isSubmitting && <LoadingAnimation/>}
                 <div className="form-wrapper">
                     <div className="row">
                         <div className="col-md-6">
@@ -170,6 +217,7 @@ const EventCategory = () => {
                                         onClick={handleEventCategoryPost}
                                         className="btn"
                                     >
+
                                         Create Category
                                     </button>
                                 )}
@@ -184,16 +232,11 @@ const EventCategory = () => {
                                     eventCategories={eventCategories}
                                 />
                             )}
-                            {eventSubCategoryPostSuccess && <div className='well'>
-                                <h2 className="text-success">Subcategory Created successfully</h2>
-                                </div>}
                         </div>
                     </div>
                 </div>
             </div>
-        <div className="p-4"/>
-
-
+            <div className="p-4" />
         </div>
     );
 };
