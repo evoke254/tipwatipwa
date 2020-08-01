@@ -10,18 +10,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
 import Moment from "react-moment";
 
-const EventView = ({
-    match: {
-        params: { eventId }
-    }
-}) => {
-    console.log(eventId);
+const EventView = (props) => {
+    const {
+        match: {
+            params: { eventId,categoryID,subCategoryID }
+        }
+    } = props
     const [event, setEvent] = useState("");
     const [dataIsLoaded, setDataIsLoaded] = useState(false);
     useEffect(() => {
         if (!dataIsLoaded) {
+            const url = window.location.href.replace(props.location.pathname,'')
             Axios.get(
-                "http://127.0.0.1:8000/api/eventview/" + parseInt(eventId)
+                `${url}/api/events_and_experiences/${categoryID}/${subCategoryID}/${eventId}`
             ).then(res => {
                 setEvent(res.data);
                 setDataIsLoaded(true);

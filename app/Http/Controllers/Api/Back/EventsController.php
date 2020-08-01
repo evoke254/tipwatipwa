@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api\Back;
 
 use App\Event;
+use App\EventCategory;
 use App\EventImage;
 use App\EventsModel\Event as EventsModelEvent;
+use App\EventsModel\EventSubCategory as EventsModelEventSubCategory;
+use App\EventSubcategory;
 use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,6 +21,31 @@ class EventsController extends Controller
         $image =EventImage::where('event_id',$event_id)->get()->first();
         $imageProp ='http://'. request()->getHttpHost().'/'. str_replace('public','storage',$image->path);
         return $imageProp;
+    }
+    public function handleEventcategory($id)
+    {
+
+        $category =EventCategory::with('SubCategories')->find($id);
+        if (count($category->SubCategories)<1) {
+            return response()->json('Not found',404);
+
+        }
+        return response()->json($category);
+    }
+    public function fetchSubCategoryEvents($category_id,$sub_category_id)
+    {
+        $category =EventCategory::find($category_id);
+        $subCategory = EventSubcategory::find($sub_category_id);
+        $subCategoryEvents = Event::where('subCategory_id',$sub_category_id)
+        ->where('category_id',$category_id)->latest()->get();
+        if (count($subCategoryEvents)<1) {
+        return response()->json('Not Found',404);
+
+        }
+        $merged = array_merge(['category'=>$category,
+        'subCategory'=>$subCategory,
+        'events'=>$subCategoryEvents]);
+        return response()->json($merged);
     }
     /**
      * Display a listing of the resource.
@@ -98,9 +126,11 @@ class EventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Event $event,$eventId)
+    public function show($category_id,$sub_category_id,$eventId)
     {
-        $eventDetails = Event::find($eventId);
+        $eventDetails = Event::where('category_id',$category_id)
+        ->where('subCategory_id',$sub_category_id)
+        ->where('id',$eventId)->first();
         // return response()->json($eventDetails);
         $image = $this->getImage($eventDetails->id);
         $eventArray =$eventDetails->toArray();

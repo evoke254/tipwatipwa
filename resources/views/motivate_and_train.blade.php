@@ -37,9 +37,22 @@
 			  </div>
 			</div>
     	</div>
+    	<div class="col my-4">
+    		<div class="card">
+			  <div class="view overlay">
+			    <img class="card-img-top" style="height: 450px; object-fit: cover;" src="{{ asset('storage/images/corp.jpg') }}" alt="Swift Apps Africa">
+			    <a href="#!">
+			      <div class="mask rgba-white-slight"></div>
+			    </a>
+			  </div>
+			  <div class="card-body">
+			    <h4 class="card-title text-center short-border">Virtual Team Building</h4>
+			  </div>
+			</div>
+    	</div>
 
 
-    </div> 
+    </div>
   </div>
 </section>
 

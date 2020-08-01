@@ -16,13 +16,13 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/', 'HomepageController@index')->name('home');
-Route::get('/events_and_experiences', 'AboutitemController@about')->name('events_and_experiences');
+Route::view('/events_and_experiences', 'FrontEnd.react')->name('events_and_experiences');
+Route::view('/events_and_experiences/{path?}', 'FrontEnd.react')->where('path','.*');
+
 Route::get('/fitness_for_all', 'AboutitemController@fit')->name('fitness_for_all');
 Route::get('/explore_and_discover', 'AboutitemController@explore')->name('explore_and_discover');
 Route::get('/motivate_and_train', 'AboutitemController@train')->name('motivate_and_train');
-Route::view('eventlist', 'FrontEnd.Events.read');
 Route::view('event', 'admin.events.create');
-Route::view('eventview/{eventId}', 'FrontEnd.Events.view');
 
 
 
@@ -47,8 +47,8 @@ Route::get('/trainers', 'PageController@trainers')->name('trainers');
 
 Route::post('/subscribe', 'SubscriberController@store');
 
-Route::get('schedule', 'HomeController@schedule');
-Route::post('schedule', 'HomeController@schedule')->name('schedule');
+// Route::get('schedule', 'HomeController@schedule');
+// Route::post('schedule', 'HomeController@schedule')->name('schedule');
 
 
 

@@ -219,7 +219,10 @@ export const EventCategorySelector = ({ onSelectALL }) => {
 
     useEffect(() => {
         if (!isLoaded) {
-            Axios.get("http://127.0.0.1:8000/api/admin/event/category", {
+        const url = window.location.href.replace(props.location.pathname,'')
+
+
+            Axios.get(url+"/api/admin/event/category", {
                 headers: { crossDomain: true }
             })
 
@@ -380,7 +383,7 @@ export const LoadingAnimation =()=>(
 </div>
 
 )
-const ScheduleCreate = () => {
+const ScheduleCreate = (props) => {
     const [currentStep, setcurrentStep] = useState(1);
     const stepTitles = ["Category", "Details", "Images"];
     const [eventDetails, seteventDetails] = useState(null);
@@ -400,9 +403,10 @@ const ScheduleCreate = () => {
             data.append(key, eventDetails[key]);
         }
         eventImages.map(element => data.append("images[]", element));
-        const url = "http://3d115aa0d4a1.ngrok.io/api/admin/events";
+        // const url = "http://3d115aa0d4a1.ngrok.io/api/admin/events";
+        const url = window.location.href.replace(props.location.pathname,'/')
         setissubmitting(true);
-        Axios.post(url, data, {
+        Axios.post(url+'/api/admin/events', data, {
             crossDomain: true,
 
             headers: {
@@ -415,12 +419,12 @@ const ScheduleCreate = () => {
             }
         })
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 setdataSubmitted(true);
                 setissubmitting(false);
             })
             .catch(error => {
-                console.log(error.response.data);
+                // console.log(error.response.data);
                 setserverResponse(error.message);
                 setissubmitting(false);
             });
@@ -442,13 +446,13 @@ const ScheduleCreate = () => {
         seteventImages(data);
         setcurrentStep(4);
     };
-    const handleRedirect = ()=>{
-        console.log('redirect called');
+    // const handleRedirect = ()=>{
+    //     console.log('redirect called');
 
-        return  <Redirect to={{
-            pathname:'admin/schedule'
-        }}/>
-    }
+    //     return  <Redirect to={{
+    //         pathname:'admin/schedule'
+    //     }}/>
+    // }
     return (
         <div className="ScheduleCreate">
 

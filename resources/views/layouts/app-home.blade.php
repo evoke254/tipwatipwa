@@ -35,6 +35,9 @@
         <div></div>
     </div>
     <div>
+        <main>
+            @yield('react')
+        </main>
         <main class="">
             @yield('content')
         </main>

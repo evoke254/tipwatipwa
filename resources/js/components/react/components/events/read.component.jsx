@@ -5,23 +5,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
 import Moment from "react-moment";
 
-const EventRead = props => {
-    const elements = [1, 2, 3, 4];
-    const [events, setevents] = useState([]);
+const EventRead = (props) => {
+    const {match:{params:{categoryID,subCategoryID}}} = props;
+    const [events, setevents] = useState(null);
     const [eventLoaded, seteventLoaded] = useState(false);
+
     useEffect(() => {
+        const url = window.location.href.replace(props.location.pathname,'/')
         if (!eventLoaded) {
-            Axios.get("http://127.0.0.1:8000/api/events")
+            Axios.get(`${url}api/events_and_experiences/${categoryID}/${subCategoryID}`)
                 .then(res => {
                     setevents(res.data);
                     seteventLoaded(true);
                 })
                 .catch(error => console.log(error));
         }
-
-        // return () => {
-        //     cleanup
-        // }
     });
     return (
         <section
@@ -32,11 +30,11 @@ const EventRead = props => {
                 <div className="row d-flex justify-content-center align-items-center">
                     <div className="col-md-12 my-4">
                         <h2 className="text-center white-text">
-                            List of All Events
+                            {events && events.subCategory.name}
                         </h2>
                     </div>
                     <div className="events-wrapper row">
-                        {events.map(element => (
+                        {events && events.events.map(element => (
                             <div key={element.id} className="col-md-4 my-4">
                                 <div className="card">
                                     <div className="view overlay">
@@ -50,7 +48,7 @@ const EventRead = props => {
                                             alt={element.title}
                                         />
 
-                                        <a href={"http://127.0.0.1:8000/eventview/"+element.id}>
+                                        <a href={`http://127.0.0.1:8000/events_and_experiences/${categoryID}/${subCategoryID}/${element.id}`}>
                                             <div className="mask rgba-white-slight" />
                                         </a>
                                     </div>
