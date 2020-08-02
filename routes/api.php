@@ -22,7 +22,7 @@ Route::prefix('admin')->group(function(){
     Route::apiResource('event/category','Api\Back\EventCategoryController');
     Route::apiResource('event/subcategory','Api\Back\EventSubcategoryController');
 });
-Route::get('/events_and_experiences','Api\Back\EventCategoryController@index' );
+Route::get('/events_and_experiences','Api\Back\EventCategoryController@frontIndex' );
 Route::get('/events_and_experiences/{categoryID}','Api\Back\EventsController@handleEventcategory' );
 Route::get('/events_and_experiences/{category_id}/{subCategoryID}','Api\Back\EventsController@fetchSubCategoryEvents' );
 Route::get('/events_and_experiences/{category_id}/{subCategoryID}/{eventId}','Api\Back\EventsController@show' );

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Back;
 
+use App\CategoryImage;
 use App\Event;
 use App\EventCategory;
 use App\EventImage;
@@ -22,6 +23,17 @@ class EventsController extends Controller
         $imageProp ='http://'. request()->getHttpHost().'/'. str_replace('public','storage',$image->path);
         return $imageProp;
     }
+    private function getSubCategoryImage($id)
+    {
+        try {
+
+        $image =CategoryImage::where('type',false)->where('type_id',$id)->get()->first();
+        $imageProp ='http://'. request()->getHttpHost().'/'. str_replace('public','storage',$image->path);
+        return $imageProp;
+        } catch (\Exception $exception) {
+            return 'Not Found';
+        }
+    }
     public function handleEventcategory($id)
     {
 
@@ -30,7 +42,15 @@ class EventsController extends Controller
             return response()->json('Not found',404);
 
         }
-        return response()->json($category);
+        $newSubCat =[];
+        foreach ($category->subCategories as $key => $value) {
+        $merged = array_merge($category->subCategories[$key]->toArray(),['image_url'=>$this->getSubCategoryImage($value->id)]);
+            array_push($newSubCat,$merged);
+        }
+        $category->sub_categories = [];
+        $category_copy = json_decode(json_encode($category));
+        $category_copy->sub_categories = $newSubCat;
+        return response()->json($category_copy);
     }
     public function fetchSubCategoryEvents($category_id,$sub_category_id)
     {
@@ -38,13 +58,20 @@ class EventsController extends Controller
         $subCategory = EventSubcategory::find($sub_category_id);
         $subCategoryEvents = Event::where('subCategory_id',$sub_category_id)
         ->where('category_id',$category_id)->latest()->get();
+        $events = [];
+        foreach ($subCategoryEvents as $key => $value) {
+            $image= $this->getImage($value->id);
+            $merged = array_merge($value->toArray(),['image_url'=>$image]);
+            array_push($events,$merged);
+
+        }
         if (count($subCategoryEvents)<1) {
         return response()->json('Not Found',404);
 
         }
         $merged = array_merge(['category'=>$category,
         'subCategory'=>$subCategory,
-        'events'=>$subCategoryEvents]);
+        'events'=>$events]);
         return response()->json($merged);
     }
     /**

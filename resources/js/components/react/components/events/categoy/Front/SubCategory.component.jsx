@@ -14,6 +14,9 @@ const EventSubCategoryView = (props) => {
         .then(res =>{
             setSubCategories(res.data)
             setisloaded(true)
+            console.log(res.data);
+            document.title =subCategories && subCategories.name;
+
         })
         .catch(error=>{
             console.log(error.message);
@@ -28,7 +31,7 @@ const EventSubCategoryView = (props) => {
 
         <section
             className="MainCategory animated slower wow fadeInUp"
-            style={{ backgroundColor: "#361E12" }}
+            style={{backgroundColor:'#78845D'}}
         >
             <div className="container-fluid py-3 mt-5">
                 <div className="row d-flex justify-content-center align-items-center">

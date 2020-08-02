@@ -11,6 +11,6 @@ class EventSubcategory extends Model
     protected $guarded =[];
     public function category()
     {
-        return $this->belongsTo(EventCategory::class,'id','category_id');
+        return $this->belongsTo(EventCategory::class,'category_id','id');
     }
 }

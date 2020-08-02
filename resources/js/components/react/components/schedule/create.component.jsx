@@ -5,7 +5,6 @@ import "react-quill/dist/quill.snow.css";
 import Axios from "axios";
 import { DropzoneArea } from "material-ui-dropzone";
 import SweetAlert from "react-bootstrap-sweetalert";
-import { Redirect } from "react-router-dom";
 
 export const EventDetails = ({ onFormSubmit }) => {
     const [title, settitle] = useState("");
@@ -199,6 +198,8 @@ export const EventImages = ({ onFileChange }) => {
                 acceptedFiles={["image/*"]}
                 dropzoneText={"Drag and drop an image here or click"}
                 onChange={files => setpictures(files)}
+                filesLimit={1}
+
             />
             {pictures.length > 0 && (
                 <button
@@ -211,7 +212,7 @@ export const EventImages = ({ onFileChange }) => {
         </div>
     );
 };
-export const EventCategorySelector = ({ onSelectALL }) => {
+export const EventCategorySelector = ({ onSelectALL,url }) => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [selectedSubCategory, setSelectedSubCategory] = useState(null);
     const [categories, setcategories] = useState([]);
@@ -219,15 +220,12 @@ export const EventCategorySelector = ({ onSelectALL }) => {
 
     useEffect(() => {
         if (!isLoaded) {
-        const url = window.location.href.replace(props.location.pathname,'')
-
-
             Axios.get(url+"/api/admin/event/category", {
                 headers: { crossDomain: true }
             })
 
                 .then(res => {
-                    console.log(res.data);
+                    // console.log(res.data);
                     setcategories(res.data);
                     setisLoaded(true);
                 })
@@ -253,7 +251,7 @@ export const EventCategorySelector = ({ onSelectALL }) => {
             <div className="form-group">
                 <label htmlFor="category"> Category</label>
 
-                {categories.length > 0 && (
+                {categories.categories && (
                     <select
                         name="category"
                         id="category"
@@ -266,7 +264,7 @@ export const EventCategorySelector = ({ onSelectALL }) => {
                         <option value={0} disabled>
                             Event Category
                         </option>
-                        {categories.map(element => (
+                        {categories.categories.map(element => (
                             <option key={element.id} value={element.id}>{element.name}</option>
                         ))}
                     </select>
@@ -289,11 +287,10 @@ export const EventCategorySelector = ({ onSelectALL }) => {
                         <option value={0} disabled>
                             Event Sub Category
                         </option>
-                        {categories
+                        {categories.sub_categories
                             .filter(
-                                category => category.id == selectedCategory
-                            )[0]
-                            .sub_categories.map(element => (
+                                sub_category => sub_category.category_id == selectedCategory
+                            ).map(element => (
                                 <option key={element.id} value={element.id}>
                                     {element.name}
                                 </option>
@@ -403,8 +400,7 @@ const ScheduleCreate = (props) => {
             data.append(key, eventDetails[key]);
         }
         eventImages.map(element => data.append("images[]", element));
-        // const url = "http://3d115aa0d4a1.ngrok.io/api/admin/events";
-        const url = window.location.href.replace(props.location.pathname,'/')
+        const url = window.location.href.replace(props.location.pathname,'')
         setissubmitting(true);
         Axios.post(url+'/api/admin/events', data, {
             crossDomain: true,
@@ -442,24 +438,16 @@ const ScheduleCreate = (props) => {
         }
     };
     const handleEventImages = data => {
-        console.log(...data);
         seteventImages(data);
         setcurrentStep(4);
     };
-    // const handleRedirect = ()=>{
-    //     console.log('redirect called');
-
-    //     return  <Redirect to={{
-    //         pathname:'admin/schedule'
-    //     }}/>
-    // }
     return (
         <div className="ScheduleCreate">
 
             {dataSubmitted && (
                 <SweetAlert
                     onConfirm={()=>{
-                        console.log('confim,called');
+                        // console.log('confim,called');
                        setcurrentStep(1)
                        setdataSubmitted(false)
                     }}
@@ -507,7 +495,7 @@ const ScheduleCreate = (props) => {
                     <div className="form-group row">
                         <div className="col-md-12">
                             {currentStep == 1 && (
-                                <EventCategorySelector
+                                <EventCategorySelector url={window.location.href.replace(props.location.pathname,'')}
                                     onSelectALL={event =>
                                         handleEventCategory(event)
                                     }

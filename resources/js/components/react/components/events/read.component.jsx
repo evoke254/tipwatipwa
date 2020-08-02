@@ -24,7 +24,8 @@ const EventRead = (props) => {
     return (
         <section
             className="eventRead animated slower wow fadeInUp"
-            style={{ backgroundColor: "#361E12" }}
+            style={{backgroundColor:'#78845D'}}
+
         >
             <div className="container-fluid py-3 mt-5">
                 <div className="row d-flex justify-content-center align-items-center">

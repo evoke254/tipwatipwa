@@ -37,7 +37,8 @@ const EventView = (props) => {
     return (
         <section
             className="eventView animated slower wow fadeInUp"
-            style={{ backgroundColor: "#78845D" }}
+            style={{backgroundColor:'#78845D'}}
+
         >
             {event && (
                 <div className="container-fluid py-3 mt-5">

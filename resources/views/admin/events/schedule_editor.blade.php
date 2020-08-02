@@ -8,10 +8,26 @@
       <div class="col-md-12 col-sm-12 col-xs-12 d-flex justify-content-center">
           <div class="card p-4">
             <div class="card-body" >
-              <a href="/admin/schedule/create" class="btn btn-sm btn-success">
-                Add Event
-              </a>
-              <div id='calendar'></div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="/admin/schedule/create" class="btn btn-sm btn-success">
+                        Add Event
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+
+                        <a href="/admin/event/category" class="btn btn-sm btn-success">
+                           Event Categories
+                          </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id='calendar'></div>
+
+                    </div>
+                </div>
+
             </div>
           </div>
       </div>

@@ -22,6 +22,7 @@ const EventFrontMainCategory = (props) => {
             console.log(error.message);
         })
         }
+        document.title ="Events and Experiences";
 
         return () => {
 
@@ -33,7 +34,7 @@ const EventFrontMainCategory = (props) => {
 
         <section
             className="MainCategory animated slower wow fadeInUp"
-            style={{ backgroundColor: "#361E12" }}
+            style={{backgroundColor:'#78845D'}}
         >
             <div className="container-fluid py-3 mt-5">
                 <div className="row d-flex justify-content-center align-items-center">
